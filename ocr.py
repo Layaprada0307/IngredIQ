@@ -13,7 +13,7 @@ def extract_text_from_image(image: bytes) -> str:
     
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
-        raise ValueError("GEMINI_API_KEY not set in .env file")
+        raise ValueError("GEMINI_API_KEY environment variable is not set")
     
     if not image:
         raise ValueError("Image data is empty")
