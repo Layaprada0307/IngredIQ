@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+        "colors": {
+            "surface-container-highest": "#d9e3f6",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "on-surface": "#121c2a",
+            "tertiary-fixed": "#ffdcc6",
+            "on-secondary-fixed": "#001a42",
+            "on-primary-fixed-variant": "#005227",
+            "on-secondary-container": "#fefcff",
+            "inverse-primary": "#4de082",
+            "on-primary-container": "#005e2d",
+            "on-primary-fixed": "#00210c",
+            "on-tertiary-fixed": "#301400",
+            "surface-container-lowest": "#ffffff",
+            "surface-tint": "#006d36",
+            "inverse-on-surface": "#eaf1ff",
+            "on-primary": "#ffffff",
+            "primary-container": "#4ade80",
+            "secondary": "#0058be",
+            "secondary-fixed": "#d8e2ff",
+            "on-tertiary-container": "#794418",
+            "on-error": "#ffffff",
+            "on-background": "#121c2a",
+            "secondary-container": "#2170e4",
+            "background": "#f8f9ff",
+            "error-container": "#ffdad6",
+            "outline": "#6d7b6d",
+            "surface-dim": "#d0dbed",
+            "tertiary": "#895024",
+            "surface-container-high": "#dee9fc",
+            "primary-fixed": "#6dfe9c",
+            "on-secondary": "#ffffff",
+            "secondary-fixed-dim": "#adc6ff",
+            "on-surface-variant": "#3d4a3e",
+            "on-secondary-fixed-variant": "#004395",
+            "tertiary-container": "#ffb47f",
+            "surface-bright": "#f8f9ff",
+            "on-error-container": "#93000a",
+            "surface-container": "#e6eeff",
+            "inverse-surface": "#27313f",
+            "surface-container-low": "#eff4ff",
+            "surface-variant": "#d9e3f6",
+            "primary": "#006d36",
+            "primary-fixed-dim": "#4de082",
+            "tertiary-fixed-dim": "#ffb784",
+            "on-tertiary-fixed-variant": "#6c3a0f",
+            "outline-variant": "#bccabb",
+            "surface": "#f8f9ff"
+        },
+        "borderRadius": {
+            "DEFAULT": "1rem",
+            "lg": "2rem",
+            "xl": "3rem",
+            "full": "9999px"
+        },
+        "fontFamily": {
+            "headline": ["Inter", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+            "label": ["Inter", "sans-serif"]
+        }
+        },
+    },
+}
+</script>
+<style>
+body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.material-symbols-outlined.light-icon {
+    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+}
+.vitality-gradient {
+    background: linear-gradient(135deg, #006d36 0%, #10b981 100%);
+}
+.mesh-gradient {
+    background-color: #f8f9ff;
+    background-image: 
+        radial-gradient(at 0% 0%, hsla(145, 100%, 93%, 1) 0, transparent 50%), 
+        radial-gradient(at 100% 0%, hsla(210, 100%, 95%, 1) 0, transparent 50%);
+}
+@keyframes pulse-soft {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.9; }
+}
+.animate-pulse-soft { animation: pulse-soft 3s infinite ease-in-out; }
+
+/* Analyzing styles */
+@keyframes pulse-ring {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.2; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+.animate-pulse-ring { animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+@keyframes progress-fill {
+    0% { width: 0%; }
+    100% { width: var(--progress-target, 65%); }
+}
+.animate-progress { animation: progress-fill linear forwards; }
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+}
+.animate-float { animation: float 4s ease-in-out infinite; }
+@keyframes scan {
+    0% { top: 0%; opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+/* Results styles */
+@keyframes gauge-fill {
+    from { stroke-dashoffset: 540; }
+    to { stroke-dashoffset: var(--dash-offset); }
+}
+.animate-gauge-dynamic {
+    animation: gauge-fill 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Chat styles */
+#chat-panel {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    z-index: 100;
+}
+.message-bubble {
+    max-width: 85%;
+    word-wrap: break-word;
+}
+.ai-bubble {
+    border-bottom-left-radius: 4px;
+}
+.user-bubble {
+    border-bottom-right-radius: 4px;
+}
+.typing-dots span {
+    width: 6px;
+    height: 6px;
+    background: #006d36;
+    border-radius: 50%;
+    display: inline-block;
+    animation: typing 1.4s infinite ease-in-out both;
+}
+.typing-dots span:nth-child(1) { animation-delay: -0.32s; }
+.typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+@keyframes typing {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1.0); }
+}
+@keyframes slide-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up { animation: slide-up 0.6s ease-out forwards; }
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.premium-shadow {
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.02);
+}
+</style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container min-h-screen">
+
+    <!-- HOME SCREEN -->
+    <div id="screen-home" class="w-full min-h-screen pb-32 mesh-gradient block">
+        <nav class="bg-white/60 backdrop-blur-xl docked full-width top-0 sticky z-50 shadow-sm shadow-green-900/5">
+            <div class="flex justify-between items-center w-full px-6 py-4 max-w-screen-xl mx-auto">
+                <div class="flex items-center gap-3">
+                    <div class="vitality-gradient p-2 rounded-full flex items-center justify-center shadow-lg shadow-green-500/20">
+                    <span class="material-symbols-outlined text-white text-xl" style="font-variation-settings: 'FILL' 1;">biotech</span>
+                    </div>
+                    <h1 class="font-['Inter'] font-black tracking-tighter text-green-800 text-2xl">IngredIQ</h1>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <button onclick="showScreen('screen-history')" class="p-2 text-slate-500 hover:bg-green-50 rounded-full transition-colors active:scale-90 duration-200">
+                            <span class="material-symbols-outlined">history</span>
+                        </button>
+                        <div id="history-badge-top" class="hidden absolute top-1 right-1 w-4 h-4 bg-rose-500 border-2 border-white rounded-full flex items-center justify-center">
+                            <span class="text-[8px] font-bold text-white leading-none">0</span>
+                        </div>
+                    </div>
+                    <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container shadow-sm">
+                    <img alt="User Profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5L7kTediktEqRaWgimXCZMTkzyB6ZYpq5rk8gplV3L8QqW8SSYszp5x7ohgJUstKNAKw9T7cyMP3Qpq5IzBkKvdveNiCbYkXtGcUj3i_tL8tPhuD79uRoWWkAH4Q8W60TS8S8m-_PaX3XatmfSNcn9mifEy8iZ9mRVZji5u0Sdku4t7ba61ouLHO4qUhtcPjNl4DthuMMrbNN9mvNzfKylFJL0t7vRpaK7dvUpS6zDSZQwlkc3RI2UwCFR9Tewdia84URx8wvKj8e"/>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <main class="max-w-screen-xl mx-auto px-6 pt-8 space-y-10">
+            <!-- Hero Section -->
+            <section class="relative overflow-hidden rounded-lg h-[240px] flex items-center p-8 md:p-12 shadow-sm">
+                <div class="absolute inset-0 z-0 bg-white">
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/80 via-white/40 to-transparent"></div>
+                </div>
+                <div class="relative z-10 max-w-lg space-y-3">
+                    <h2 class="text-4xl font-extrabold tracking-tight text-on-surface leading-tight">
+                        Scan. Understand.<br/><span class="text-primary">Choose Better.</span>
+                    </h2>
+                    <p class="text-on-surface-variant text-lg font-medium leading-relaxed max-w-xs opacity-90">
+                        Unlock the hidden truth behind your food ingredients.
+                    </p>
+                </div>
+            </section>
+            
+            <!-- Main Actions: Scanner Selection -->
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Camera Scan -->
+                <button onclick="document.getElementById('camera-upload').click()" class="group relative flex flex-col items-center justify-center p-10 bg-white rounded-lg shadow-lg shadow-green-900/5 border border-slate-100 transition-all duration-500 hover:shadow-xl hover:-translate-y-1 active:scale-95 overflow-hidden">
+                    <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="vitality-gradient w-24 h-24 rounded-full flex items-center justify-center mb-6 shadow-2xl shadow-primary/30 group-hover:animate-pulse-soft transition-transform">
+                        <span class="material-symbols-outlined text-white text-5xl" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-on-surface mb-2">Camera Scan</h3>
+                    <p class="text-on-surface-variant text-base font-medium opacity-80">Point and analyze in real-time</p>
+                </button>
+                
+                <!-- Upload Image -->
+                <button onclick="document.getElementById('image-upload').click()" class="group relative flex flex-col items-center justify-center p-10 bg-white/60 rounded-lg border border-white transition-all duration-500 hover:bg-white hover:shadow-lg active:scale-95">
+                    <div class="bg-secondary-container/10 w-24 h-24 rounded-full flex items-center justify-center mb-6 text-secondary-container group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-5xl" style="font-variation-settings: 'FILL' 0;">upload_file</span>
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-on-surface mb-2">Upload Image</h3>
+                    <p class="text-on-surface-variant text-base font-medium opacity-80">From your gallery or files</p>
+                </button>
+            </section>
+        </main>
+        
+    </div>
+
+    <!-- HISTORY SCREEN -->
+    <div id="screen-history" class="w-full min-h-screen pb-32 mesh-gradient hidden">
+        <nav class="bg-white/60 backdrop-blur-xl docked full-width top-0 sticky z-50 shadow-sm shadow-green-900/5">
+            <div class="flex justify-between items-center w-full px-6 py-4 max-w-screen-xl mx-auto">
+                <div class="flex items-center gap-3">
+                    <button onclick="showScreen('screen-home')" class="p-2 -ml-2 text-slate-500 hover:bg-green-50 rounded-full transition-colors active:scale-90 duration-200">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                    </button>
+                    <h1 class="font-headline font-black tracking-tighter text-green-800 text-xl">Scan History</h1>
+                </div>
+                <button onclick="clearHistory()" class="px-4 py-2 text-rose-600 bg-rose-50 hover:bg-rose-100 rounded-full text-xs font-black uppercase tracking-wider transition-colors active:scale-95">
+                    Clear All
+                </button>
+            </div>
+        </nav>
+
+        <main class="max-w-screen-md mx-auto px-6 pt-8 space-y-6">
+            <div class="flex flex-col space-y-4">
+                <div class="space-y-1">
+                    <h2 class="text-3xl font-black tracking-tight text-on-surface">Your Records</h2>
+                    <p class="text-on-surface-variant font-medium opacity-80">Revisit your previous ingredient analyses</p>
+                </div>
+                
+                <!-- Grade Legend -->
+                <div class="flex flex-wrap gap-2 py-1">
+                    <div class="flex items-center gap-1.5 px-3 py-1 bg-white border border-surface-container rounded-full shadow-sm">
+                        <div class="w-2 h-2 rounded-full" style="background-color: #22C55E"></div>
+                        <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">A-Excellent</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 px-3 py-1 bg-white border border-surface-container rounded-full shadow-sm">
+                        <div class="w-2 h-2 rounded-full" style="background-color: #86EFAC"></div>
+                        <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">B-Good</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 px-3 py-1 bg-white border border-surface-container rounded-full shadow-sm">
+                        <div class="w-2 h-2 rounded-full" style="background-color: #F59E0B"></div>
+                        <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">C-Average</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 px-3 py-1 bg-white border border-surface-container rounded-full shadow-sm">
+                        <div class="w-2 h-2 rounded-full" style="background-color: #EF4444"></div>
+                        <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">D-Poor</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 px-3 py-1 bg-white border border-surface-container rounded-full shadow-sm">
+                        <div class="w-2 h-2 rounded-full" style="background-color: #DC2626"></div>
+                        <span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">F-Very Poor</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="history-empty-state" class="hidden py-24 flex flex-col items-center justify-center text-center space-y-4">
+                <div class="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center text-on-surface-variant/30">
+                    <span class="material-symbols-outlined text-5xl">inventory_2</span>
+                </div>
+                <div class="max-w-[240px] space-y-2">
+                    <p class="font-black text-on-surface text-lg">No scans yet</p>
+                    <p class="text-on-surface-variant text-sm font-medium">Start by scanning a product to build your history!</p>
+                </div>
+                <button onclick="showScreen('screen-home')" class="px-6 py-3 vitality-gradient text-white font-bold rounded-full shadow-lg shadow-green-500/20 active:scale-95 transition-transform">
+                    Go Scan Now
+                </button>
+            </div>
+
+            <!-- History List -->
+            <div id="history-list" class="space-y-4">
+                <!-- Cards injected here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- SEARCH SCREEN -->
+    <div id="screen-search" class="w-full min-h-screen pb-32 mesh-gradient hidden">
+        <nav class="bg-white/60 backdrop-blur-xl docked full-width top-0 sticky z-50 shadow-sm shadow-green-900/5">
+            <div class="flex justify-between items-center w-full px-6 py-4 max-w-screen-xl mx-auto">
+                <div class="flex items-center gap-3">
+                    <button onclick="showScreen('screen-home')" class="p-2 -ml-2 text-slate-500 hover:bg-green-50 rounded-full transition-colors active:scale-90 duration-200">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                    </button>
+                    <h1 class="font-headline font-black tracking-tighter text-green-800 text-xl">Ingredient Search</h1>
+                </div>
+            </div>
+        </nav>
+
+        <main class="max-w-screen-md mx-auto px-6 pt-8 space-y-8">
+            <div class="flex flex-col space-y-2">
+                <h2 class="text-3xl font-black tracking-tight text-on-surface">Smart Insights</h2>
+                <p class="text-on-surface-variant font-medium opacity-80">Quickly check safety of any food additive</p>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="relative group">
+                <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                    <span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+                </div>
+                <input type="text" id="ingredient-search-input" placeholder="e.g. Sodium Benzoate, Palm Oil..." class="w-full pl-12 pr-4 py-4 bg-white rounded-2xl border-2 border-surface-container-high focus:border-primary focus:ring-0 transition-all font-medium text-lg placeholder:text-slate-300" onkeypress="if(event.key==='Enter') handleIngredientSearch()">
+                <button onclick="handleIngredientSearch()" class="absolute right-2 top-2 bottom-2 px-6 vitality-gradient text-white font-bold rounded-xl active:scale-95 transition-transform flex items-center justify-center">
+                    <span id="search-btn-text">Search</span>
+                    <div id="search-spinner" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                </button>
+            </div>
+
+            <!-- Popular Searches -->
+            <div class="space-y-3">
+                <h3 class="text-xs font-black text-on-surface-variant uppercase tracking-widest pl-1">Popular Right Now</h3>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="handleChipClick('Sugar')" class="px-4 py-2 rounded-full bg-white border border-surface-container-high text-xs font-bold text-on-surface-variant hover:border-primary hover:text-primary transition-all">Sugar</button>
+                    <button onclick="handleChipClick('Palm Oil')" class="px-4 py-2 rounded-full bg-white border border-surface-container-high text-xs font-bold text-on-surface-variant hover:border-primary hover:text-primary transition-all">Palm Oil</button>
+                    <button onclick="handleChipClick('MSG')" class="px-4 py-2 rounded-full bg-white border border-surface-container-high text-xs font-bold text-on-surface-variant hover:border-primary hover:text-primary transition-all">MSG</button>
+                    <button onclick="handleChipClick('Aspartame')" class="px-4 py-2 rounded-full bg-white border border-surface-container-high text-xs font-bold text-on-surface-variant hover:border-primary hover:text-primary transition-all">Aspartame</button>
+                    <button onclick="handleChipClick('Sodium Benzoate')" class="px-4 py-2 rounded-full bg-white border border-surface-container-high text-xs font-bold text-on-surface-variant hover:border-primary hover:text-primary transition-all">Sodium Benzoate</button>
+                    <button onclick="handleChipClick('BHA')" class="px-4 py-2 rounded-full bg-white border border-surface-container-high text-xs font-bold text-on-surface-variant hover:border-primary hover:text-primary transition-all">BHA</button>
+                    <button onclick="handleChipClick('Carrageenan')" class="px-4 py-2 rounded-full bg-white border border-surface-container-high text-xs font-bold text-on-surface-variant hover:border-primary hover:text-primary transition-all">Carrageenan</button>
+                </div>
+            </div>
+
+            <!-- Search Results Area -->
+            <div id="search-results-container" class="space-y-6"></div>
+
+            <!-- Recent Searches -->
+            <div id="recent-searches-container" class="space-y-3">
+                <h3 class="text-xs font-black text-on-surface-variant uppercase tracking-widest pl-1">Recent Searches</h3>
+                <div id="recent-searches-list" class="flex flex-col gap-2">
+                    <!-- History items will be injected here -->
+                    <p class="text-xs text-on-surface-variant/40 italic pl-1">No recent searches</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ANALYZING SCREEN -->
+    <div id="screen-analyzing" class="w-full min-h-screen hidden bg-gradient-to-b from-white to-surface-container-low/30 relative overflow-hidden flex-col">
+        <nav class="bg-white/80 backdrop-blur-xl docked full-width top-0 sticky z-50 shadow-sm shadow-green-900/5">
+            <div class="flex justify-between items-center w-full px-6 py-4 max-w-screen-xl mx-auto">
+                <button class="text-slate-400 hover:bg-green-50 transition-colors p-2 rounded-full active:scale-95 duration-200">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <h1 class="font-black tracking-tighter text-green-700 font-['Inter'] text-2xl">IngredIQ</h1>
+                <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+                    <img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5L7kTediktEqRaWgimXCZMTkzyB6ZYpq5rk8gplV3L8QqW8SSYszp5x7ohgJUstKNAKw9T7cyMP3Qpq5IzBkKvdveNiCbYkXtGcUj3i_tL8tPhuD79uRoWWkAH4Q8W60TS8S8m-_PaX3XatmfSNcn9mifEy8iZ9mRVZji5u0Sdku4t7ba61ouLHO4qUhtcPjNl4DthuMMrbNN9mvNzfKylFJL0t7vRpaK7dvUpS6zDSZQwlkc3RI2UwCFR9Tewdia84URx8wvKj8e"/>
+                </div>
+            </div>
+        </nav>
+        
+        <main class="flex-grow flex items-center justify-center px-6 relative overflow-hidden">
+            <div class="absolute top-1/4 -left-20 w-64 h-64 bg-primary-fixed/15 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-1/4 -right-20 w-80 h-80 bg-secondary-fixed/20 rounded-full blur-[120px]"></div>
+            
+            <div class="max-w-md w-full text-center z-10">
+                <div class="relative flex items-center justify-center mb-10">
+                    <div class="absolute w-48 h-48 bg-primary-container/20 rounded-full animate-pulse-ring"></div>
+                    <div class="absolute w-64 h-64 bg-primary-container/10 rounded-full animate-pulse-ring" style="animation-delay: 1s;"></div>
+                    <div class="relative w-36 h-36 bg-surface-container-lowest rounded-[2.5rem] shadow-2xl flex items-center justify-center overflow-hidden border-2 border-white animate-float">
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary via-primary-container to-secondary opacity-10"></div>
+                        <span class="material-symbols-outlined text-6xl text-primary font-variation-settings: 'FILL' 1;">hub</span>
+                        <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-transparent via-primary-container to-transparent blur-[1px]" style="animation: scan 2.5s ease-in-out infinite;"></div>
+                    </div>
+                </div>
+                
+                <h2 class="text-3xl font-extrabold tracking-tight text-on-surface mb-3 font-headline">Analyzing Ingredients</h2>
+                <p class="text-on-surface-variant leading-relaxed max-w-[280px] mx-auto mb-10">
+                    Our AI is decoding labels for safety and allergens.
+                </p>
+                
+                <div class="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden mb-12">
+                    <div id="progress-bar-fill" class="h-full bg-gradient-to-r from-primary to-primary-container rounded-full" style="width: 0%; transition: width 0.5s ease;"></div>
+                </div>
+                
+                <div class="space-y-6 text-left max-w-[260px] mx-auto">
+                    <!-- Step 1 -->
+                    <div id="step-1" class="flex items-center gap-4">
+                        <div class="step-icon flex-shrink-0 w-8 h-8 rounded-full bg-primary-container flex items-center justify-center">
+                            <div class="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                        </div>
+                        <span class="step-text text-on-surface font-semibold">Scanning image</span>
+                    </div>
+                    <!-- Step 2 -->
+                    <div id="step-2" class="flex items-center gap-4 opacity-40">
+                        <div class="step-icon flex-shrink-0 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center">
+                            <div class="w-2 h-2 bg-on-surface-variant rounded-full"></div>
+                        </div>
+                        <span class="step-text text-on-surface-variant font-medium">Extracting ingredients</span>
+                    </div>
+                    <!-- Step 3 -->
+                    <div id="step-3" class="flex items-center gap-4 opacity-40">
+                        <div class="step-icon flex-shrink-0 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center">
+                            <div class="w-2 h-2 bg-on-surface-variant rounded-full"></div>
+                        </div>
+                        <span class="step-text text-on-surface-variant font-medium">Analyzing safety</span>
+                    </div>
+                </div>
+
+                <!-- NEW: Timeout Handling UI -->
+                <div id="analysis-timeout-container" class="mt-12 space-y-4">
+                    <p id="analysis-status-msg" class="text-xs font-bold text-amber-600 uppercase tracking-widest hidden animate-pulse">
+                        This is taking longer than usual...
+                    </p>
+                    <button id="cancel-analysis-btn" onclick="cancelAnalysis()" class="hidden px-6 py-2 rounded-full border border-rose-200 text-rose-500 text-xs font-black uppercase tracking-wider hover:bg-rose-50 transition-colors">
+                        Cancel Analysis
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- RESULTS SCREEN -->
+    <div id="screen-results" class="w-full min-h-screen hidden pb-32 bg-background">
+        <header class="bg-white/70 backdrop-blur-xl border-b border-surface-container/30 fixed top-0 w-full z-50">
+            <div class="flex justify-between items-center w-full px-6 py-4 max-w-screen-xl mx-auto">
+                <div class="flex items-center gap-4">
+                    <button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors" onclick="handleResultsBack()">
+                        <span class="material-symbols-outlined text-on-surface" data-icon="arrow_back">arrow_back</span>
+                    </button>
+                    <span class="font-black tracking-tight text-primary text-xl">IngredIQ</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Confidence</p>
+                        <p class="text-xs font-black text-primary">98% Accuracy</p>
+                    </div>
+                    <div class="w-9 h-9 rounded-full overflow-hidden border border-primary/20 shadow-sm">
+                        <img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5L7kTediktEqRaWgimXCZMTkzyB6ZYpq5rk8gplV3L8QqW8SSYszp5x7ohgJUstKNAKw9T7cyMP3Qpq5IzBkKvdveNiCbYkXtGcUj3i_tL8tPhuD79uRoWWkAH4Q8W60TS8S8m-_PaX3XatmfSNcn9mifEy8iZ9mRVZji5u0Sdku4t7ba61ouLHO4qUhtcPjNl4DthuMMrbNN9mvNzfKylFJL0t7vRpaK7dvUpS6zDSZQwlkc3RI2UwCFR9Tewdia84URx8wvKj8e"/>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-screen-md mx-auto px-6 pt-24 pb-32">
+            <!-- Score Section -->
+            <section class="flex flex-col items-center mb-12 fade-in-up">
+                <div class="relative flex items-center justify-center">
+                    <div class="absolute w-64 h-64 rounded-full bg-primary/5 animate-pulse-ring"></div>
+                    <div class="relative w-48 h-48 rounded-full flex flex-col items-center justify-center bg-white premium-shadow">
+                        <svg class="absolute inset-0 w-full h-full -rotate-90">
+                            <circle class="text-surface-container" cx="96" cy="96" fill="none" r="86" stroke="currentColor" stroke-width="8"></circle>
+                            <circle id="score-gauge" class="text-primary" cx="96" cy="96" fill="none" r="86" stroke="currentColor" stroke-dasharray="540" stroke-dashoffset="540" stroke-linecap="round" stroke-width="10"></circle>
+                        </svg>
+                        <div class="text-center z-10">
+                            <span id="score-value" class="text-6xl font-black text-on-surface tracking-tighter">0.0</span>
+                            <div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em] mt-1">Safety Score</div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-2 bg-primary-fixed text-on-primary-fixed-variant px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border border-white shadow-sm">
+                        98% Confidence
+                    </div>
+                </div>
+                
+                <div class="mt-10 text-center px-4 max-w-sm">
+                    <h2 id="score-grade-text" class="text-3xl font-extrabold tracking-tight text-on-surface mb-3">...</h2>
+                    <details class="group">
+                        <summary class="list-none cursor-pointer">
+                            <p id="score-summary" class="text-on-surface-variant text-base leading-relaxed font-medium inline">...</p>
+                            <span class="material-symbols-outlined text-primary text-sm align-middle ml-1 transition-transform group-open:rotate-180">expand_more</span>
+                        </summary>
+                        <div class="mt-4 p-4 bg-surface-container-low rounded-2xl text-left text-sm text-on-surface-variant leading-relaxed">
+                            <p class="font-bold text-primary mb-2">Detailed Breakdown</p>
+                            <span id="score-breakdown-details"></span>
+                        </div>
+                    </details>
+                </div>
+            </section>
+            
+            <!-- Warning Banner -->
+            <section id="warning-banner" class="mb-12 fade-in-up stagger-1 hidden">
+                <div class="bg-amber-50/50 rounded-2xl p-6 flex gap-5 items-center border border-amber-100 premium-shadow">
+                    <div class="bg-amber-500 w-12 h-12 flex-shrink-0 rounded-full flex items-center justify-center text-white shadow-lg shadow-amber-200">
+                        <span class="material-symbols-outlined font-bold">priority_high</span>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-amber-900 text-xs mb-1 uppercase tracking-widest">Potential Allergen</h3>
+                        <p id="warning-text" class="text-sm text-amber-800/80 leading-snug"></p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Ingredients List -->
+            <section class="mb-16 fade-in-up stagger-2">
+                <div class="flex justify-between items-end mb-8 px-1">
+                    <div>
+                        <span class="text-[10px] font-black uppercase tracking-[0.3em] text-secondary/70">Bio-Audit Report</span>
+                        <h2 class="text-2xl font-extrabold tracking-tight mt-1">Ingredient Analysis</h2>
+                    </div>
+                    <span id="ingredient-count-badge" class="text-on-surface-variant font-bold text-[10px] py-1.5 px-3 bg-surface-container rounded-lg uppercase tracking-wider">0 Components</span>
+                </div>
+                <div id="ingredients-container" class="space-y-4">
+                    <!-- Javascript will inject ingredients here -->
+                </div>
+            </section>
+            
+            <!-- CTA -->
+            <div class="mt-8 fade-in-up stagger-4">
+                <button onclick="resetToHome()" class="w-full py-5 rounded-3xl vitality-gradient text-white font-black text-lg shadow-2xl shadow-primary/40 flex items-center justify-center gap-3 active:scale-[0.97] transition-all hover:brightness-110">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+                    Scan Another Product
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- CHAT FLOATING BUTTON -->
+    <button id="chat-toggle-btn" onclick="toggleChat()" class="fixed bottom-6 right-6 w-14 h-14 vitality-gradient text-white rounded-full shadow-lg flex items-center justify-center z-[110] transition-transform hover:scale-110 active:scale-95">
+        <span class="material-symbols-outlined text-2xl" id="chat-icon">chat</span>
+    </button>
+
+    <!-- GLOBAL BOTTOM NAVIGATION -->
+    <nav id="global-bottom-nav" class="bg-white/90 backdrop-blur-2xl fixed bottom-0 left-0 right-0 w-full rounded-t-[2.5rem] pb-safe z-50 flex justify-around items-center px-4 pt-4 pb-6 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] border-t border-slate-50 transition-transform duration-500">
+        <button onclick="showScreen('screen-home')" id="nav-scan" class="flex flex-col items-center justify-center text-slate-400 p-2 hover:text-green-700 active:scale-90 duration-300 transition-all">
+            <span class="material-symbols-outlined">center_focus_strong</span>
+            <span class="font-['Inter'] font-bold text-[10px] uppercase tracking-[0.1em] mt-1">Scan</span>
+        </button>
+        <button onclick="showScreen('screen-search')" id="nav-insights" class="flex flex-col items-center justify-center text-slate-400 p-2 hover:text-green-700 active:scale-90 duration-300 transition-all">
+            <span class="material-symbols-outlined">lightbulb</span>
+            <span class="font-['Inter'] font-bold text-[10px] uppercase tracking-[0.1em] mt-1">Insights</span>
+        </button>
+        <div class="relative">
+            <button onclick="showScreen('screen-history')" id="nav-history" class="flex flex-col items-center justify-center text-slate-400 p-2 hover:text-green-700 active:scale-90 duration-300 transition-all">
+                <span class="material-symbols-outlined">history</span>
+                <span class="font-['Inter'] font-bold text-[10px] uppercase tracking-[0.1em] mt-1">History</span>
+            </button>
+            <div id="history-badge-bottom" class="hidden absolute top-1 right-1 w-5 h-5 bg-rose-500 border-2 border-white rounded-full flex items-center justify-center">
+                <span class="text-[9px] font-black text-white leading-none">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- AI CHAT ASSISTANT UI -->
+    <div id="chat-panel" class="fixed bottom-0 left-0 right-0 h-[80vh] bg-surface-bright border-t border-outline-variant shadow-2xl translate-y-full flex flex-col pointer-events-none opacity-0">
+        <!-- Header -->
+        <div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between vitality-gradient text-white">
+            <div>
+                <h3 class="font-bold">IngredIQ Assistant</h3>
+                <p class="text-[10px] opacity-90">Ask me anything about ingredients</p>
+            </div>
+            <button onclick="toggleChat()" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/20">
+                <span class="material-symbols-outlined text-xl">close</span>
+            </button>
+        </div>
+        
+        <!-- Messages Area -->
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 bg-white/50">
+            <!-- AI Welcome Message -->
+            <div class="flex flex-col items-start message-bubble ai-bubble bg-white p-3 rounded-2xl shadow-sm border border-outline-variant text-sm text-on-surface">
+                <p>Hello! I'm your IngredIQ safety expert. How can I help you today?</p>
+            </div>
+            
+            <!-- Suggested Questions (only shown when conversation is fresh) -->
+            <div id="suggested-questions" class="flex flex-wrap gap-2 pt-2">
+                <button onclick="handleSuggested('Is this product safe for diabetics?')" class="px-3 py-1.5 rounded-full bg-surface-container-high text-[11px] font-bold text-primary hover:bg-primary-container transition-colors">Is this safe for diabetics?</button>
+                <button onclick="handleSuggested('What are the harmful ingredients?')" class="px-3 py-1.5 rounded-full bg-surface-container-high text-[11px] font-bold text-primary hover:bg-primary-container transition-colors">What is harmful?</button>
+                <button onclick="handleSuggested('Suggest a healthier alternative')" class="px-3 py-1.5 rounded-full bg-surface-container-high text-[11px] font-bold text-primary hover:bg-primary-container transition-colors">Healthier alternatives?</button>
+                <button onclick="handleSuggested('Explain the ingredients simply')" class="px-3 py-1.5 rounded-full bg-surface-container-high text-[11px] font-bold text-primary hover:bg-primary-container transition-colors">Explain simply</button>
+            </div>
+        </div>
+        
+        <!-- Typing Indicator -->
+        <div id="typing-indicator" class="px-6 py-2 hidden">
+            <div class="typing-dots flex gap-1">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        
+        <!-- Input Area -->
+        <div class="p-4 bg-white border-t border-outline-variant">
+            <div class="flex items-center gap-2 bg-surface-container-low rounded-full px-4 py-2 border border-outline-variant">
+                <input type="text" id="chat-input" placeholder="Type your question..." class="flex-1 bg-transparent border-none focus:ring-0 text-sm py-1 placeholder:text-on-surface-variant/50" onkeypress="if(event.key==='Enter') sendChatMessage()">
+                <button onclick="sendChatMessage()" class="w-8 h-8 vitality-gradient text-white rounded-full flex items-center justify-center shadow-md">
+                    <span class="material-symbols-outlined text-lg">send</span>
+                </button>
+            </div>
+            <div class="h-safe-bottom"></div>
+        </div>
+    </div>
+
+    <!-- Hidden File Inputs -->
+    <input type="file" id="camera-upload" accept="image/*" capture="environment" class="hidden">
+    <input type="file" id="image-upload" accept="image/*" class="hidden">
+
+    <script>
+        // Grade Configuration
+        const GRADE_CONFIG = {
+            'A': { label: 'Excellent', color: '#22C55E' },
+            'B': { label: 'Good', color: '#86EFAC' },
+            'C': { label: 'Average', color: '#F59E0B' },
+            'D': { label: 'Poor', color: '#EF4444' },
+            'F': { label: 'Very Poor', color: '#DC2626' }
+        };
+
+        window.DEMO_MODE = false; // Toggle to true to use MOCK_DATA when API fails
+
+        const MOCK_DATA = {
+            status: "success",
+            ingredients: [
+                { name: "Aqua", risk: "safe", category: "solvent", notes: "Safe hydrating base" },
+                { name: "Glycerin", risk: "safe", category: "moisturizer", notes: "Natural moisture retention" },
+                { name: "Linalool", risk: "moderate", category: "fragrance", notes: "Known minor allergen" },
+                { name: "Parabens", risk: "harmful", category: "preservative", notes: "Potential endocrine disruptor. May interfere with hormone production." }
+            ],
+            score: {
+                overall: 4.5,
+                grade: "C",
+                summary: "Average — contains some questionable additives.",
+                breakdown: { safe: 2, moderate: 1, harmful: 1 },
+                flags: ["Parabens", "Linalool"]
+            }
+        };
+
+        // Variables for DOM elements
+        let screenHome, screenHistory, screenSearch, screenAnalyzing, screenResults;
+        let historyEmptyState, historyList, historyBadgeTop, historyBadgeBottom;
+        let cameraUpload, imageUpload;
+
+        let scanHistory = JSON.parse(localStorage.getItem('ingrediq_history')) || [];
+        let currentScreen = 'screen-home';
+        let abortController = null;
+        let lastScanContext = ""; // context for chat
+
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            screenHome = document.getElementById('screen-home');
+            screenHistory = document.getElementById('screen-history');
+            screenSearch = document.getElementById('screen-search');
+            screenAnalyzing = document.getElementById('screen-analyzing');
+            screenResults = document.getElementById('screen-results');
+            
+            historyEmptyState = document.getElementById('history-empty-state');
+            historyList = document.getElementById('history-list');
+            historyBadgeTop = document.getElementById('history-badge-top');
+            historyBadgeBottom = document.getElementById('history-badge-bottom');
+
+            cameraUpload = document.getElementById('camera-upload');
+            imageUpload = document.getElementById('image-upload');
+
+            if (cameraUpload) {
+                cameraUpload.addEventListener('change', handleFileUpload);
+            }
+            if (imageUpload) {
+                imageUpload.addEventListener('change', handleFileUpload);
+            }
+
+            // Initialize badges
+            updateHistoryBadges();
+        });
+
+        function showScreen(screenId) {
+            [screenHome, screenHistory, screenSearch, screenAnalyzing, screenResults].forEach(s => {
+                s.classList.add('hidden');
+                s.classList.remove('block', 'flex');
+            });
+
+            // Handle Nav Underline and Colors
+            const navItems = {
+                'screen-home': document.getElementById('nav-scan'),
+                'screen-history': document.getElementById('nav-history'),
+                'screen-search': document.getElementById('nav-insights')
+            };
+
+            Object.keys(navItems).forEach(key => {
+                const nav = navItems[key];
+                if (key === screenId) {
+                    nav.classList.add('bg-green-50', 'text-green-800');
+                    nav.classList.remove('text-slate-400');
+                    nav.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 1";
+                } else {
+                    nav.classList.remove('bg-green-50', 'text-green-800');
+                    nav.classList.add('text-slate-400');
+                    nav.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 0";
+                }
+            });
+
+            const target = document.getElementById(screenId);
+            target.classList.remove('hidden');
+            if (screenId === 'screen-analyzing') target.classList.add('flex');
+            else target.classList.add('block');
+
+            // Hide bottom nav on focus screens
+            const globalNav = document.getElementById('global-bottom-nav');
+            if (screenId === 'screen-analyzing' || screenId === 'screen-results') {
+                globalNav.classList.add('translate-y-full');
+            } else {
+                globalNav.classList.remove('translate-y-full');
+            }
+
+            currentScreen = screenId;
+            if (screenId === 'screen-history') renderHistory();
+            if (screenId === 'screen-search') renderSearchHistory();
+
+            window.scrollTo(0, 0);
+        }
+
+        function resetToHome() {
+            showScreen('screen-home');
+            if (cameraUpload) cameraUpload.value = '';
+            if (imageUpload) imageUpload.value = '';
+            const gauge = document.getElementById('score-gauge');
+            if (gauge) gauge.classList.remove('animate-gauge-dynamic');
+        }
+
+        function updateHistoryBadges() {
+            const count = scanHistory.length;
+            [historyBadgeTop, historyBadgeBottom].forEach(badge => {
+                if (count > 0) {
+                    badge.classList.remove('hidden');
+                    badge.querySelector('span').innerText = count;
+                } else {
+                    badge.classList.add('hidden');
+                }
+            });
+        }
+
+        function saveScan(data, imageB64) {
+            const scanEntry = {
+                id: Date.now(),
+                date: new Date().toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }),
+                productImage: imageB64,
+                score: data.score.overall,
+                grade: data.score.grade,
+                summary: data.score.summary,
+                ingredients: data.ingredients,
+                flags: data.score.flags || [],
+                breakdown: data.score.breakdown
+            };
+
+            scanHistory.unshift(scanEntry);
+            if (scanHistory.length > 20) scanHistory.pop();
+
+            try {
+                localStorage.setItem('ingrediq_history', JSON.stringify(scanHistory));
+            } catch (e) {
+                console.warn('LocalStorage full, clearing oldest entries...');
+                // Discard 5 oldest entries and retry
+                scanHistory.splice(-5);
+                localStorage.setItem('ingrediq_history', JSON.stringify(scanHistory));
+            }
+            updateHistoryBadges();
+        }
+
+        function compressImage(base64, callback) {
+            const img = new window.Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const max = 100;
+                let w = img.width;
+                let h = img.height;
+                if (w > h) { h = h * max/w; w = max; }
+                else { w = w * max/h; h = max; }
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, w, h);
+                callback(canvas.toDataURL('image/jpeg', 0.3));
+            }
+            img.src = base64;
+        }
+
+        function renderHistory() {
+            if (scanHistory.length === 0) {
+                historyEmptyState.classList.remove('hidden');
+                historyList.classList.add('hidden');
+                return;
+            }
+
+            historyEmptyState.classList.add('hidden');
+            historyList.classList.remove('hidden');
+            historyList.innerHTML = '';
+
+            scanHistory.forEach(scan => {
+                const harmfulCount = scan.breakdown.harmful;
+                const config = GRADE_CONFIG[scan.grade] || { label: 'Unknown', color: '#64748b' };
+                const fullLabel = `${scan.grade} (${config.label})`;
+                
+                historyList.innerHTML += `
+                <div onclick="showHistoryDetail(${scan.id})" class="bg-white rounded-2xl p-4 flex items-center justify-between border border-surface-container-high shadow-sm hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-surface-container relative">
+                            <img src="${scan.productImage}" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/5"></div>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-white text-[10px] font-black px-2 py-0.5 rounded-md" style="background-color: ${config.color}" title="${config.label}">${fullLabel}</span>
+                                <h4 class="font-bold text-on-surface text-sm">${scan.score.toFixed(1)} Safety Score</h4>
+                            </div>
+                            <p class="text-[10px] font-medium text-on-surface-variant/60 mt-1 uppercase tracking-wider">${scan.date}</p>
+                            <p class="text-[10px] font-bold text-rose-500/80 mt-0.5">${harmfulCount > 0 ? `⚠️ ${harmfulCount} Harmful Ingredients` : '✓ All Ingredients Safe'}</p>
+                        </div>
+                    </div>
+                    <span class="material-symbols-outlined text-slate-300 group-hover:text-primary transition-colors">chevron_right</span>
+                </div>`;
+            });
+        }
+
+        function showHistoryDetail(id) {
+            const scan = scanHistory.find(s => s.id === id);
+            if (!scan) return;
+
+            // Adapting scan structure for populateResults
+            const resultData = {
+                score: {
+                    overall: scan.score,
+                    grade: scan.grade,
+                    summary: scan.summary,
+                    flags: scan.flags,
+                    breakdown: scan.breakdown
+                },
+                ingredients: scan.ingredients
+            };
+
+            populateResults(resultData);
+            
+            // Set a flag to know we came from history so back button goes back to history
+            screenResults.dataset.from = 'history';
+            
+            showScreen('screen-results');
+        }
+
+        function clearHistory() {
+            if (confirm('Clear all scan history? This cannot be undone.')) {
+                scanHistory = [];
+                localStorage.removeItem('ingrediq_history');
+                updateHistoryBadges();
+                renderHistory();
+            }
+        }
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        // End of helper functions
+
+        async function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // NEW: Prepare image for history storage
+            const imageB64 = await fileToBase64(file);
+
+            // Transition to Analyzing screen
+            showScreen('screen-analyzing');
+            
+            resetAnalyzingSteps();
+            
+            // Step 1: Uploading & Scanning
+            setStepLoading(1);
+
+            let resultData;
+            let statusTimer, cancelBtnTimer, hardTimeout, fakeProgress;
+            
+            try {
+                const formData = new FormData();
+                formData.append("file", file);
+
+                // NEW: Initialize AbortController for timeout
+                abortController = new AbortController();
+                const signal = abortController.signal;
+
+                console.log("[TIMING] Request Sent: " + Date.now());
+                const requestStartTime = Date.now();
+
+                // Setup Timers
+                statusTimer = setTimeout(() => {
+                    document.getElementById('analysis-status-msg').classList.remove('hidden');
+                }, 10000);
+
+                cancelBtnTimer = setTimeout(() => {
+                    document.getElementById('cancel-analysis-btn').classList.remove('hidden');
+                }, 15000);
+
+                hardTimeout = setTimeout(() => {
+                    abortController.abort();
+                }, 30000);
+
+                // Fake visual progress to Step 2 while waiting for the single API endpoint
+                fakeProgress = setTimeout(() => {
+                    setStepActive(1);
+                    setStepLoading(2);
+                    document.getElementById('progress-bar-fill').style.width = '50%';
+                }, 2000);
+
+                const response = await fetch("http://127.0.0.1:8000/analyze", {
+                    method: "POST",
+                    body: formData,
+                    signal: signal
+                });
+                
+                clearTimeout(fakeProgress);
+                console.log("[TIMING] Response Received: " + Date.now() + " (Duration: " + (Date.now() - requestStartTime) + "ms)");
+                
+                // Transition to Step 3 visually right before parsing
+                setStepActive(1);
+                setStepActive(2);
+                setStepLoading(3);
+                document.getElementById('progress-bar-fill').style.width = '75%';
+
+                if (!response.ok) {
+                    let errMsg = "API failed";
+                    try {
+                        const errData = await response.json();
+                        errMsg = errData.detail || errMsg;
+                    } catch (e) {}
+                    throw new Error(errMsg);
+                }
+                resultData = await response.json();
+                
+                // NEW: Capture context for chat
+                lastScanContext = JSON.stringify({
+                    score: resultData.score.overall,
+                    grade: resultData.score.grade,
+                    summary: resultData.score.summary,
+                    ingredients: resultData.ingredients.map(i => `${i.name} (${i.risk})`)
+                });
+
+                console.log("Raw API response:", resultData);
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    alert("Analysis took too long. Please try again.");
+                } else {
+                    console.error("Backend Error:", error);
+                    if (window.DEMO_MODE) {
+                        console.log("Using Mock Data (Demo Mode)");
+                        resultData = MOCK_DATA;
+                    } else {
+                        alert("Analysis failed: " + error.message);
+                    }
+                }
+            } finally {
+                // Ensure timers and UI are reset whether success or failure
+                clearTimeout(statusTimer);
+                clearTimeout(cancelBtnTimer);
+                clearTimeout(hardTimeout);
+                document.getElementById('analysis-status-msg').classList.add('hidden');
+                document.getElementById('cancel-analysis-btn').classList.add('hidden');
+            }
+
+            // If we have resultData, proceed as normal. If not (timeout), reset.
+            if (!resultData) {
+                resetToHome();
+                return;
+            }
+
+            // Finish analyzing
+            setStepActive(3);
+            document.getElementById('progress-bar-fill').style.width = '100%';
+            
+            // NEW: Save to History (with compression)
+            compressImage(imageB64, (smallImage) => {
+                try {
+                    saveScan(resultData, smallImage);
+                } catch(e) {
+                    console.error("Error saving scan to history:", e);
+                }
+            });
+            
+            // Show results UI after a tiny delay so the 100% progress bar is visible briefly
+            setTimeout(() => {
+                try {
+                    populateResults(resultData);
+                    screenResults.dataset.from = 'scan';
+                    showScreen('screen-results');
+                } catch (e) {
+                    console.error("Error populating results:", e);
+                    alert("An error occurred while displaying results.");
+                    resetToHome();
+                }
+            }, 600);
+        }
+
+        function handleResultsBack() {
+            if (screenResults.dataset.from === 'history') {
+                showScreen('screen-history');
+            } else {
+                resetToHome();
+            }
+        }
+
+        function cancelAnalysis() {
+            if (abortController) {
+                abortController.abort();
+            }
+        }
+        
+        // Event listeners are now handled inside DOMContentLoaded above
+
+        function resetAnalyzingSteps() {
+            document.getElementById('progress-bar-fill').style.width = '0%';
+            setStepLoading(1);
+            setStepInactive(2);
+            setStepInactive(3);
+        }
+
+        function setStepLoading(stepNum) {
+            const el = document.getElementById('step-' + stepNum);
+            el.classList.remove('opacity-40');
+            el.querySelector('.step-text').classList.replace('text-on-surface-variant', 'text-on-surface');
+            el.querySelector('.step-text').classList.replace('font-medium', 'font-semibold');
+            el.querySelector('.step-icon').className = 'step-icon flex-shrink-0 w-8 h-8 rounded-full bg-primary-container flex items-center justify-center';
+            el.querySelector('.step-icon').innerHTML = '<div class="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>';
+        }
+
+        function setStepActive(stepNum) {
+            const el = document.getElementById('step-' + stepNum);
+            el.classList.remove('opacity-40');
+            el.querySelector('.step-text').classList.replace('text-on-surface-variant', 'text-on-surface');
+            el.querySelector('.step-text').classList.replace('font-medium', 'font-semibold');
+            el.querySelector('.step-icon').className = 'step-icon flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center';
+            el.querySelector('.step-icon').innerHTML = '<span class="material-symbols-outlined text-on-primary text-xl font-bold">check</span>';
+        }
+
+        function setStepInactive(stepNum) {
+            const el = document.getElementById('step-' + stepNum);
+            el.classList.add('opacity-40');
+            el.querySelector('.step-text').classList.replace('text-on-surface', 'text-on-surface-variant');
+            el.querySelector('.step-text').classList.replace('font-semibold', 'font-medium');
+            el.querySelector('.step-icon').className = 'step-icon flex-shrink-0 w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center';
+            el.querySelector('.step-icon').innerHTML = '<div class="w-2 h-2 bg-on-surface-variant rounded-full"></div>';
+        }
+
+        function populateResults(data) {
+            const score = data.score.overall;
+            const gauge = document.getElementById('score-gauge');
+            
+            // Set dynamic dash offset
+            const offset = 540 - (540 * (score / 10));
+            
+            // Force reflow and re-apply animation class so it triggers 
+            gauge.classList.remove('animate-gauge-dynamic');
+            void gauge.offsetWidth; 
+            gauge.style.setProperty('--dash-offset', offset);
+            gauge.classList.add('animate-gauge-dynamic');
+            
+            // Score colors
+            gauge.classList.remove('text-primary', 'text-amber-500', 'text-rose-500');
+            if(score >= 7) gauge.classList.add('text-primary');
+            else if(score >= 4) gauge.classList.add('text-amber-500');
+            else gauge.classList.add('text-rose-500');
+
+            document.getElementById('score-value').innerText = score.toFixed(1);
+            
+            const config = GRADE_CONFIG[data.score.grade] || { label: 'Unknown' };
+            document.getElementById('score-grade-text').innerText = `Grade: ${data.score.grade} (${config.label})`;
+            document.getElementById('score-summary').innerText = data.score.summary;
+            document.getElementById('score-breakdown-details').innerText = 
+                `Safe: ${data.score.breakdown.safe} | Moderate: ${data.score.breakdown.moderate} | Harmful: ${data.score.breakdown.harmful}`;
+
+            // Warnings
+            const warningBanner = document.getElementById('warning-banner');
+            if(data.score.flags && data.score.flags.length > 0) {
+                warningBanner.classList.remove('hidden');
+                document.getElementById('warning-text').innerHTML = `Contains <span class="font-bold text-amber-900">${data.score.flags.join(', ')}</span>. Recommended to review notes below.`;
+            } else {
+                warningBanner.classList.add('hidden');
+            }
+
+            // Ingredients
+            document.getElementById('ingredient-count-badge').innerText = `${data.ingredients.length} Components`;
+            const container = document.getElementById('ingredients-container');
+            container.innerHTML = '';
+            
+            data.ingredients.forEach(ing => {
+                const isSafe = ing.risk === 'safe';
+                const isMod = ing.risk === 'moderate';
+                const isHarm = ing.risk === 'harmful';
+
+                let bgClass = "bg-white";
+                let iconBlockClass = "bg-slate-100 text-slate-500 border-slate-200";
+                let badgeClass = "bg-slate-100 text-slate-600 border-slate-200";
+                let iconName = "info";
+                let badgeText = "UNKNOWN";
+
+                if (isSafe) {
+                    bgClass = "bg-white";
+                    iconBlockClass = "bg-emerald-50 text-emerald-600 border-emerald-100 group-hover:bg-emerald-100";
+                    badgeClass = "bg-emerald-50 text-emerald-600 border-emerald-100";
+                    iconName = "check_circle";
+                    badgeText = "SAFE";
+                } else if (isMod) {
+                    bgClass = "bg-amber-50/20";
+                    iconBlockClass = "bg-amber-100 text-amber-600 border-amber-200 group-hover:bg-amber-200";
+                    badgeClass = "bg-amber-100 text-amber-600 border-amber-200";
+                    iconName = "warning";
+                    badgeText = "MODERATE";
+                } else if (isHarm) {
+                    bgClass = "bg-rose-50/30 border-rose-100 shadow-rose-900/5";
+                    iconBlockClass = "bg-rose-500 text-white border-rose-600 shadow-lg shadow-rose-200";
+                    badgeClass = "bg-rose-100 text-rose-600 border-rose-200";
+                    iconName = "warning";
+                    badgeText = "HARMFUL";
+                }
+
+                if (isHarm) {
+                    container.innerHTML += `
+                    <div class="${bgClass} rounded-3xl p-6 border premium-shadow">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-2xl ${iconBlockClass} flex items-center justify-center">
+                                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">${iconName}</span>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-on-surface text-lg">${ing.name}</h4>
+                                    <p class="text-xs font-medium text-on-surface-variant capitalize">${ing.category}</p>
+                                </div>
+                            </div>
+                            <span class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border ${badgeClass}">${badgeText}</span>
+                        </div>
+                        <div class="p-4 bg-white/60 rounded-2xl border border-rose-100/50">
+                            <p class="text-sm leading-relaxed text-on-surface-variant">
+                                <span class="font-black text-rose-600 block mb-1 text-[10px] uppercase tracking-wider">Expert Insight</span> 
+                                ${ing.notes}
+                            </p>
+                        </div>
+                    </div>`;
+                } else {
+                    container.innerHTML += `
+                    <div class="${bgClass} rounded-2xl p-5 flex items-center justify-between border border-surface-container-high premium-shadow transition-all hover:-translate-y-1 cursor-pointer group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-2xl ${iconBlockClass} flex items-center justify-center transition-colors">
+                                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">${iconName}</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-on-surface text-lg">${ing.name}</h4>
+                                <p class="text-xs font-medium text-on-surface-variant capitalize">${ing.category}</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end gap-2">
+                            <span class="text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border ${badgeClass}">${badgeText}</span>
+                        </div>
+                    </div>`;
+                }
+            });
+        }
+
+        // --- Chat Assistant Functions ---
+        let isChatOpen = false;
+
+        function toggleChat() {
+            const panel = document.getElementById('chat-panel');
+            const icon = document.getElementById('chat-icon');
+            
+            isChatOpen = !isChatOpen;
+            
+            if (isChatOpen) {
+                panel.classList.remove('translate-y-full', 'pointer-events-none', 'opacity-0');
+                panel.classList.add('translate-y-0', 'pointer-events-auto', 'opacity-100');
+                icon.innerText = 'keyboard_arrow_down';
+            } else {
+                panel.classList.add('translate-y-full', 'pointer-events-none', 'opacity-0');
+                panel.classList.remove('translate-y-0', 'pointer-events-auto', 'opacity-100');
+                icon.innerText = 'chat';
+            }
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            input.value = '';
+            appendMessage(text, true);
+            
+            // Hide suggestions after first message
+            document.getElementById('suggested-questions').classList.add('hidden');
+
+            const indicator = document.getElementById('typing-indicator');
+            indicator.classList.remove('hidden');
+            
+            try {
+                const response = await fetch("http://127.0.0.1:8000/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        message: text,
+                        context: lastScanContext
+                    })
+                });
+                
+                const data = await response.json();
+                indicator.classList.add('hidden');
+                appendMessage(data.reply, false);
+            } catch (error) {
+                indicator.classList.add('hidden');
+                appendMessage("Sorry, I'm having trouble connecting to my brain right now. Please try again later!", false);
+            }
+        }
+
+        function handleSuggested(text) {
+            document.getElementById('chat-input').value = text;
+            sendChatMessage();
+        }
+
+        function appendMessage(text, isUser) {
+            const container = document.getElementById('chat-messages');
+            const msgDiv = document.createElement('div');
+            
+            if (isUser) {
+                msgDiv.className = 'flex flex-col items-end message-bubble user-bubble self-end bg-primary vitality-gradient text-white p-3 rounded-2xl shadow-sm border border-primary text-sm ml-auto';
+            } else {
+                msgDiv.className = 'flex flex-col items-start message-bubble ai-bubble bg-white p-3 rounded-2xl shadow-sm border border-outline-variant text-sm text-on-surface';
+            }
+            
+            msgDiv.innerHTML = `<p>${text}</p>`;
+            container.appendChild(msgDiv);
+            
+            // Scroll to bottom
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // --- Ingredient Search Functions ---
+        let searchHistory = JSON.parse(localStorage.getItem('ingrediq_search_history')) || [];
+
+        function handleChipClick(name) {
+            document.getElementById('ingredient-search-input').value = name;
+            handleIngredientSearch();
+        }
+
+        async function handleIngredientSearch() {
+            const input = document.getElementById('ingredient-search-input');
+            const ingredient = input.value.trim();
+            if (!ingredient) return;
+
+            // Loading state
+            const btnText = document.getElementById('search-btn-text');
+            const spinner = document.getElementById('search-spinner');
+            btnText.classList.add('hidden');
+            spinner.classList.remove('hidden');
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/ingredient-search", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ ingredient: ingredient })
+                });
+                
+                const data = await response.json();
+                renderSearchResult(data);
+                saveSearchHistory(ingredient);
+            } catch (error) {
+                console.error("Search failed:", error);
+                alert("Search failed. Please check your connection.");
+            } finally {
+                btnText.classList.remove('hidden');
+                spinner.classList.add('hidden');
+            }
+        }
+
+        function renderSearchResult(data) {
+            const container = document.getElementById('search-results-container');
+            const colorClass = data.classification === 'safe' ? 'bg-emerald-500' : (data.classification === 'moderate' ? 'bg-amber-500' : 'bg-rose-500');
+            const lightColorClass = data.classification === 'safe' ? 'bg-emerald-50 border-emerald-100' : (data.classification === 'moderate' ? 'bg-amber-50 border-amber-100' : 'bg-rose-50 border-rose-100');
+            const textColorClass = data.classification === 'safe' ? 'text-emerald-700' : (data.classification === 'moderate' ? 'text-amber-700' : 'text-rose-700');
+
+            container.innerHTML = `
+                <div class="bg-white rounded-3xl p-8 border border-surface-container-high premium-shadow fade-in-up">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h2 class="text-4xl font-black text-on-surface tracking-tighter">${data.name}</h2>
+                            <p class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mt-1 opacity-60">${data.category}</p>
+                        </div>
+                        <span class="${colorClass} text-white text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-wider">${data.classification}</span>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="p-6 ${lightColorClass} rounded-2xl border">
+                            <h4 class="text-xs font-black ${textColorClass} uppercase tracking-[0.2em] mb-2">Expert Breakdown</h4>
+                            <p class="text-sm font-medium text-on-surface leading-relaxed">${data.notes}</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-5 bg-slate-50 rounded-2xl border border-slate-100">
+                                <h4 class="text-[10px] font-black text-on-surface-variant uppercase tracking-widest mb-3">Health Effects</h4>
+                                <p class="text-xs font-medium text-on-surface-variant/80 leading-relaxed">${data.health_effects}</p>
+                            </div>
+                            <div class="p-5 bg-primary/5 rounded-2xl border border-primary/10">
+                                <h4 class="text-[10px] font-black text-primary uppercase tracking-widest mb-3">Safer Alternatives</h4>
+                                <p class="text-xs font-bold text-primary/80 leading-relaxed">${data.safer_alternatives}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function saveSearchHistory(name) {
+            // Remove if already exists to move to top
+            searchHistory = searchHistory.filter(item => item.toLowerCase() !== name.toLowerCase());
+            searchHistory.unshift(name);
+            if (searchHistory.length > 5) searchHistory.pop();
+            
+            localStorage.setItem('ingrediq_search_history', JSON.stringify(searchHistory));
+            renderSearchHistory();
+        }
+
+        function renderSearchHistory() {
+            const list = document.getElementById('recent-searches-list');
+            if (searchHistory.length === 0) {
+                list.innerHTML = '<p class="text-xs text-on-surface-variant/40 italic pl-1">No recent searches</p>';
+                return;
+            }
+
+            list.innerHTML = searchHistory.map(item => `
+                <button onclick="handleChipClick('${item}')" class="flex items-center gap-3 p-3 bg-white rounded-xl border border-surface-container-high hover:border-primary transition-colors text-left group">
+                    <span class="material-symbols-outlined text-slate-300 group-hover:text-primary transition-colors text-sm">history</span>
+                    <span class="text-sm font-bold text-on-surface-variant group-hover:text-on-surface">${item}</span>
+                </button>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

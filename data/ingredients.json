@@ -1,0 +1,13 @@
+[
+  {"name": "Sugar",               "classification": "harmful",  "category": "sweetener",   "notes": "High glycaemic index; linked to obesity and diabetes."},
+  {"name": "Palm Oil",            "classification": "moderate", "category": "fat",          "notes": "High in saturated fats; environmental concerns."},
+  {"name": "Cocoa Powder",        "classification": "safe",     "category": "flavouring",   "notes": "Rich in antioxidants when unsweetened."},
+  {"name": "Wheat Flour",         "classification": "moderate", "category": "grain",        "notes": "Contains gluten; refined flour has low nutritional value."},
+  {"name": "Skimmed Milk Powder", "classification": "safe",     "category": "dairy",        "notes": "Good source of protein and calcium."},
+  {"name": "Whey Powder",         "classification": "safe",     "category": "dairy",        "notes": "High-quality protein source."},
+  {"name": "Soy Lecithin",        "classification": "moderate", "category": "emulsifier",   "notes": "Generally recognised as safe; some sensitivity concerns."},
+  {"name": "Sodium Benzoate",     "classification": "harmful",  "category": "preservative", "notes": "May form benzene (carcinogen) when combined with vitamin C."},
+  {"name": "Vanillin",            "classification": "moderate", "category": "flavouring",   "notes": "Synthetic flavour; safe in small quantities."},
+  {"name": "Salt",                "classification": "moderate", "category": "mineral",      "notes": "Essential mineral; harmful in excess — raises blood pressure."},
+  {"name": "Tbhq",                "classification": "harmful",  "category": "antioxidant",  "notes": "Synthetic antioxidant linked to adverse effects at high doses."}
+]
