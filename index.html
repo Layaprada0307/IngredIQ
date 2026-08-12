@@ -721,10 +721,12 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
 
             // Hide bottom nav on focus screens
             const globalNav = document.getElementById('global-bottom-nav');
-            if (screenId === 'screen-analyzing' || screenId === 'screen-results') {
-                globalNav.classList.add('translate-y-full');
-            } else {
-                globalNav.classList.remove('translate-y-full');
+            if (globalNav) {
+                if (screenId === 'screen-analyzing' || screenId === 'screen-results') {
+                    globalNav.classList.add('translate-y-full');
+                } else {
+                    globalNav.classList.remove('translate-y-full');
+                }
             }
 
             currentScreen = screenId;
@@ -929,7 +931,7 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
                     document.getElementById('progress-bar-fill').style.width = '50%';
                 }, 2000);
 
-                const response = await fetch("http://127.0.0.1:8000/analyze", {
+                const response = await fetch("/analyze", {
                     method: "POST",
                     body: formData,
                     signal: signal
@@ -1216,7 +1218,7 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
             indicator.classList.remove('hidden');
             
             try {
-                const response = await fetch("http://127.0.0.1:8000/chat", {
+                const response = await fetch("/chat", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -1276,7 +1278,7 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
             spinner.classList.remove('hidden');
 
             try {
-                const response = await fetch("http://127.0.0.1:8000/ingredient-search", {
+                const response = await fetch("/ingredient-search", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ ingredient: ingredient })

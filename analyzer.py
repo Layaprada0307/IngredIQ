@@ -41,8 +41,9 @@ Example output format:
 
 Return ONLY the JSON array. No explanation. No markdown."""
 
+        # Note: Groq text models rotate frequently — check console.groq.com/docs/deprecations if this breaks again.
         response = client.chat.completions.create(
-            model="meta-llama/llama-4-scout-17b-16e-instruct",
+            model="openai/gpt-oss-120b",
             messages=[
                 {
                     "role": "user",
@@ -50,7 +51,8 @@ Return ONLY the JSON array. No explanation. No markdown."""
                 }
             ],
             max_tokens=2000,
-            temperature=0.1
+            temperature=0.1,
+            timeout=10.0
         )
         
         result_text = response.choices[0].message.content.strip()
@@ -66,6 +68,9 @@ Return ONLY the JSON array. No explanation. No markdown."""
         end = result_text.rfind(']') + 1
         if start != -1 and end > start:
             result_text = result_text[start:end]
+        else:
+            print("No JSON array brackets found in response.")
+            return _analyze_with_database(ingredients)
         
         analyzed = json.loads(result_text)
         
